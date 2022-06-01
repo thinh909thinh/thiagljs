@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./agl.min.js"></script>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: blanchedalmond;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .main {
+            margin-top: 50px;
+        }
+
+        span {
+            color: red;
+        }
+
+        select {
+            width: 200px;
+            height: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: coral;
+        }
+
+        .btn {
+            width: 200px;
+            height: 40px;
+            background-color: rgb(52, 169, 199);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            color: white;
+
+        }
+
+        .btn:hover {
+            background-color: rgb(74, 106, 203);
+        }
+
+        .mon {
+            width: 300px;
+            height: 50px;
+        }
+
+        .sl {
+            width: 100px;
+            height: 20px;
+        }
+
+        .dl {
+            width: 200px;
+        }
+
+        .show {
+            width: 150px;
+        }
+
+        .tt {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tt input {
+            margin-right: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>MENU</h1>
+    <div ng-app="myApp" ng-controller="myCtrl" class="main">
+        <form name="myForm">
+            <div class="mon">
+                <span>Chọn món</span> <select name="cars" ng-model="slry" id="slry" ng-required="true"
+                    onchange="myFunction()">
+                    <option value="25000">caphe</option>
+                    <option value="30000">tra sua</option>
+                    <option value="50000">tra dao</option>
+                    <option value="40000">nuoc cam</option>
+                </select>
+            </div>
+            <div class="dl"><span>Đơn giá :</span>
+                <small>angularjs :{{slry}}</small>
+                <small id="demo"></small>
+            </div>
+            <h3>Nhập vào số luong :</h3>
+            <input class="sl" name="soluong" type="text" ng-model="exp" id="exp" ng-keypress="total=''"
+                ng-required="true" />
+            <div class="show">
+                <span ng-show="myForm.soluong.$invalid">
+                    bạn vui lòng nhập số lượng đồ uống:
+                </span>
+            </div>
+            <span>Chọn size</span><select ng-model="size"id="size">
+                <option value="1">s</option>
+                <option value="1.1">m</option>
+            </select>
+            <div class="tt">
+                <input class="btn" type="button" value="thành tiền" ng-click="Calc()" />
+             
+                <div class="out">
+                    <h3>Thành tiền : {{tien | currency : 'VND '}}</h3>
+                    <h3>Thuế VAT : {{tax | currency : 'VND '}}</h3>
+                    <h3>Tổng tiền thanh toán : {{total | currency : 'VND '}}</h3>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.exp = "";
+            $scope.slry = "";
+            $scope.tax = 0;
+            $scope.tien = 0
+            $scope.total = "";
+            $scope.size=0;
+            //    $scope.soluong="";
+            //    $scope.cars=""
+            $scope.Calc = function () {
+
+                $scope.tax = $scope.exp * ($scope.slry*$scope.size) * 0.1;
+                $scope.tien = $scope.exp * ($scope.slry*$scope.size) ;
+                $scope.total = $scope.exp *($scope.slry*$scope.size)  + $scope.tax
+            }
+        });
+    </script>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("slry").value;
+            document.getElementById("demo").innerHTML = "javascrip" + x;
+        }
+    </script>
+    </script>
+</body>
+
+</html>
